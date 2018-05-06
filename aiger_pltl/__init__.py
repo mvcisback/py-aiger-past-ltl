@@ -6,8 +6,9 @@ from parsimonious import Grammar, NodeVisitor
 
 
 PLTL_GRAMMAR = Grammar(u'''
-phi =  wsince / or / and / hist / past / vyest / neg / AP
+phi =  wsince / or / and / implies / hist / past / vyest / neg / AP
 or = "(" _ phi _ "|" _ phi _ ")"
+implies = "(" _ phi _ "->" _ phi _ ")"
 and = "(" _ phi _ "&" _ phi _ ")"
 hist = "H" _ phi
 past = "P" _ phi
@@ -66,6 +67,13 @@ class PLTLVisitor(NodeVisitor):
         (b,) = right.outputs.keys()
         
         return (left | right) >> weak_since(a, b, str(uuid1()))
+
+    def visit_implies(self, _, children):
+        _, _, left, _, _, _, right, _, _ = children
+        (a,) = left.outputs.keys()
+        (b,) = right.outputs.keys()
+        
+        return (left | right) >> implies(a, b, str(uuid1()))
 
 
 def parse(pltl_str: str):
