@@ -11,7 +11,9 @@ setup(
     install_requires=[
         'parsimonious',
         'funcy',
-        'py-aiger'
+        'py-aiger',
+        'lenses',
+        'hypothesis',
     ],
     packages=find_packages(),
 )
