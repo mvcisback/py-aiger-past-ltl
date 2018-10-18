@@ -59,7 +59,7 @@ class PLTLVisitor(NodeVisitor):
         return once(children[2])
     
     def visit_wsince(self, _, children):
-        return since(children[2], children[6]) | historically(~children[6])
+        return weak_since(children[2], children[6])
 
     def visit_since(self, _, children):
         return since(children[2], children[6])
@@ -121,10 +121,18 @@ def since(left, right):
     return aiger.BoolExpr((left.aig | right.aig) >> monitor)
 
 
+def weak_since(left, right):
+    return since(left, right) | historically(~right)
+
+
 def once(expr):
     return aiger.BoolExpr(expr.aig >> past_monitor(expr.output))
 
 
-def parse(pltl_str: str):
+def parse(pltl_str: str, output=None):
     expr = PLTLVisitor().visit(PLTL_GRAMMAR.parse(pltl_str))
-    return type(expr)(expr.aig.evolve(comments=(pltl_str,)))
+    aig = expr.aig.evolve(comments=(pltl_str,))
+    if output is not None:
+        aig = aig['o', {expr.output: output}]
+
+    return type(expr)(aig)
