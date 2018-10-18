@@ -1,7 +1,7 @@
 from setuptools import find_packages, setup
 
-DESC = 'Library for generating (p)ast (t)ense (l)inear (t)emporal
-(l)ogic monitors as aiger circuits.'
+DESC = '''Library for generating (p)ast (t)ense (l)inear (t)emporal
+(l)ogic monitors as aiger circuits.'''
 
 setup(
     name='py-aiger-ptltl',
