@@ -51,8 +51,8 @@ def test_hist_identity(expr1, expr2, trc):
 
 @given(PTLTL_STRATEGY, PTLTL_STRATEGY, TRACE_STRATEGY)
 def test_past_identity(expr1, expr2, trc):
-    expr3 = expr1.historically() & expr2.historically()
-    expr4 = (expr1 & expr2).historically()
+    expr3 = expr1.once() | expr2.once()
+    expr4 = (expr1 | expr2).once()
     assert expr3(trc) == expr4(trc)
 
 
@@ -66,4 +66,5 @@ def test_since_to_once_reduction(expr, trc):
 @given(PTLTL_STRATEGY, TRACE_STRATEGY)
 def test_false_since(expr, trc):
     expr2 = aiger_ptltl.parse('FALSE').since(expr)
-    assert not expr2(trc)
+    assert expr2(trc) == expr(trc)
+
