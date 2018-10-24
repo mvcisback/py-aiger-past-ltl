@@ -10,7 +10,8 @@ from hypothesis_cfg import ContextFreeGrammarStrategy
 
 
 PLTL_GRAMMAR = Grammar(u'''
-phi =  since / or / and / implies / hist / past / vyest / neg / AP
+phi =  since / or / and / implies / hist / past / vyest / neg 
+     / true / false / AP
 or = "(" _ phi _ "|" _ phi _ ")"
 implies = "(" _ phi _ "->" _ phi _ ")"
 and = "(" _ phi _ "&" _ phi _ ")"
@@ -19,6 +20,8 @@ past = "P" _ phi
 vyest = "Z" _ phi
 since = "[" _ phi _ "S" _ phi _ "]"
 neg = "~" _ phi
+true = "TRUE"
+false = "FALSE"
 
 _ = ~r" "*
 AP = ~r"[a-zA-z]" ~r"[a-zA-Z\d]*"
@@ -82,6 +85,12 @@ class PLTLVisitor(NodeVisitor):
     def visit_since(self, _, children):
         return children[2].since(children[6])
 
+    def visit_true(self, *_):
+        return PTLTLExpr(aiger.atom(True).aig)
+
+    def visit_false(self, *_):
+        return PTLTLExpr(aiger.atom(False).aig)
+
 
 def vyest_monitor(name):
     return aiger.delay(
@@ -115,14 +124,17 @@ def past_monitor(name):
 
 
 def since_monitor(left, right):
-    circ = aiger.and_gate([left, 'active'], 'active')
     tmp = aiger.common._fresh()
-    circ >>= aiger.or_gate([right, 'active'], tmp)
+    left, right = aiger.atom(left), aiger.atom(right)
+    active = aiger.atom(tmp)
+    update = active.implies(left) & (~active.implies(right))
+
+    circ = update.aig['o', {update.output: tmp}]
     return circ.feedback(
-        inputs=['active'],
+        inputs=[tmp],
         outputs=[tmp],
         latches=[aiger.common._fresh()],
-        initials=[True],
+        initials=[False],
         keep_outputs=True,
     )
 
