@@ -13,9 +13,7 @@ setup(
     license='MIT',
     install_requires=[
         'parsimonious',
-        'funcy',
         'py-aiger',
-        'lenses',
     ],
     packages=find_packages(),
 )

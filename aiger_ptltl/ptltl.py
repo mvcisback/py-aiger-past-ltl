@@ -1,16 +1,9 @@
-from uuid import uuid1
-
 import aiger
-import funcy as fn
-from lenses import bind
-
 from parsimonious import Grammar, NodeVisitor
-import hypothesis.strategies as st
-from hypothesis_cfg import ContextFreeGrammarStrategy
 
 
 PLTL_GRAMMAR = Grammar(u'''
-phi =  since / or / and / implies / hist / past / vyest / neg 
+phi =  since / or / and / implies / hist / past / vyest / neg
      / true / false / AP
 or = "(" _ phi _ "|" _ phi _ ")"
 implies = "(" _ phi _ "->" _ phi _ ")"
@@ -24,7 +17,7 @@ true = "TRUE"
 false = "FALSE"
 
 _ = ~r" "*
-AP = ~r"[a-zA-z]" ~r"[a-zA-Z\d]*"
+AP = ~r"[a-zA-z]" ~r"[a-zA-Z\\d]*"
 EOL = "\\n"
 ''')
 
@@ -81,7 +74,7 @@ class PLTLVisitor(NodeVisitor):
 
     def visit_past(self, _, children):
         return children[2].once()
-    
+
     def visit_since(self, _, children):
         return children[2].since(children[6])
 

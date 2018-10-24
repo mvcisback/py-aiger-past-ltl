@@ -67,4 +67,3 @@ def test_since_to_once_reduction(expr, trc):
 def test_false_since(expr, trc):
     expr2 = aiger_ptltl.parse('FALSE').since(expr)
     assert expr2(trc) == expr(trc)
-
