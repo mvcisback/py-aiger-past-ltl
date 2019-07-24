@@ -17,7 +17,7 @@ true = "TRUE"
 false = "FALSE"
 
 _ = ~r" "*
-AP = ~r"[a-zA-z]" ~r"[a-zA-Z\\d]*"
+AP = ~r"[a-zA-Z]" ~r"[a-zA-Z\\d]*"
 EOL = "\\n"
 ''')
 
@@ -42,6 +42,13 @@ class PTLTLExpr(aiger.BoolExpr):
     def since(self, other):
         monitor = since_monitor(self.output, other.output)
         return PTLTLExpr((self.aig | other.aig) >> monitor)
+
+
+def atom(var):
+    return PTLTLExpr(aiger.atom(var).aig)
+
+
+# Secret Parsing based API for internal testing.
 
 
 class PLTLVisitor(NodeVisitor):

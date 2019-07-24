@@ -1,2 +1,2 @@
 # flake8: noqa
-from aiger_ptltl.ptltl import parse
+from aiger_ptltl.ptltl import atom

@@ -8,6 +8,15 @@ monitors as aiger circuits. Builds on the [py-aiger](https://github.com/mvcisbac
 [![PyPI version](https://badge.fury.io/py/py-aiger-ptltl.svg)](https://badge.fury.io/py/py-aiger-ptltl)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-generate-toc again -->
+**Table of Contents**
+
+- [Installation](#installation)
+- [Usage](#usage)
+
+<!-- markdown-toc end -->
+
+
 # Installation
 
 If you just need to use `aiger_ptltl`, you can just run:
@@ -23,31 +32,31 @@ run:
 
 # Usage
 
-`aiger_ptltl` has two complementary API's. The first, called the
-Parser API, implements a small domain specific language for specifying
-past tense temporal logic monitors. The second api, called the
-Function API, is an embededded domain specific language centered
-around `aiger_ptltl.PTLTLExpr` objects. 
-
-We start by importing the `aiger_ptltl` module.
+The primary entry point for using `aiger_ptltl` is the `PTLTLExpr`
+class which is a simple extension of `aiger.BoolExpr` to support the
+temporal operators, historically, past (once), (variant) yesterday,
+and since.
 
 ```python
 import aiger_ptltl as ptltl
-```
 
-## Parser API
+# Atomic Propositions
+x = ptltl.atom('x')
+y = ptltl.atom('y')
+z = ptltl.atom('z')
 
-The Parser API centers around the `parse` function.
+# Propositional logic
+expr1 = ~x
+expr2 = x & (y | z)
+expr3 = (x & y) | ~z
+expr4 = ~(x & y & z)
 
-It supports simple propositional logic, `TRUE, FALSE, ~ _, (_ & _), (_
-| _), (_ -> _)`, as well as four temporal operators, `H _, P _, Z _, [_ S _]`, which denote historically, past (once), weak yesterday, and since.
+# Temporal Logic
+expr5 = x.historically()  #  (H x) ≡ x has held for all previous cycles (inclusive).
+expr6 = x.once()  #  (P x) ≡ x once held in a past cycle (inclusive).
+expr7 = x.vyest()  #  (Z x) ≡ x held in the previous cycle (true at time = 0).
+expr8 = x.since(y)  #  [x S y] ≡ x has held since the cycle after y last held.
 
-
-Atomic propositions can be created as any alphanumeric string starting
-with a letter. For example 'a' and 'Fo000bar1' are allowed while
-'1asd' and 'foo_bar' are disallowed as names for atom propositions.
-
-```python
-
-print(ptltl.parse('H ((a & P b) -> [~b S c])'))
+# Composition
+expr9 = expr7.since(expr8.vyest().vyest())
 ```
