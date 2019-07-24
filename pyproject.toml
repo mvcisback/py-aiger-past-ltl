@@ -6,6 +6,9 @@ description = "Library for generating (p)ast (t)ense (l)inear (t)emporal (l)ogic
 authors = ["Marcell Vazquez-Chanlatte <mvc@linux.com>"]
 repository = "https://github.com/mvcisback/py-aiger-past-ltl"
 license = "MIT"
+packages = [
+    { include = "aiger_ptltl" },
+]
 
 [tool.poetry.dependencies]
 python = "^3.6"
