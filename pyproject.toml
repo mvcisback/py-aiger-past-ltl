@@ -11,12 +11,12 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
-py-aiger = "^3.3.6"
+python = "^3.7"
+py-aiger = "^3.9"
 
 [tool.poetry.dev-dependencies]
 hypothesis_cfg = {git = "git://github.com/mvcisback/hypothesis-cfg.git"}
-hypothesis = "^4.28"
+hypothesis = "4.28"
 parsimonious = "^0.8.1"
 pytest-cov = "^2.7"
 pytest-flake8 = "^1.0"

@@ -102,40 +102,30 @@ def vyest_monitor(name):
 
 
 def hist_monitor(name):
-    out = aiger.common._fresh()
-    return aiger.and_gate([name, 'tmp'], out).feedback(
-        inputs=['tmp'],
-        outputs=[out],
-        latches=[aiger.common._fresh()],
-        initials=[True],
-        keep_outputs=True
+    out, latch = aiger.common._fresh(), aiger.common._fresh()
+    return aiger.and_gate([name, 'tmp'], out).loopback(
+        {'input': 'tmp', 'output': out, 'latch': latch, 'init': True}
     )
 
 
 def past_monitor(name):
-    out = aiger.common._fresh()
-    return aiger.or_gate([name, 'tmp'], out).feedback(
-        inputs=['tmp'],
-        outputs=[out],
-        latches=[aiger.common._fresh()],
-        initials=[False],
-        keep_outputs=True
+    out, latch = aiger.common._fresh(), aiger.common._fresh()
+    return aiger.or_gate([name, 'tmp'], out).loopback(
+        {'input': 'tmp', 'output': out, 'latch': latch, 'init': False}
     )
 
 
 def since_monitor(left, right):
     tmp = aiger.common._fresh()
+    latch = aiger.common._fresh()
     left, right = aiger.atom(left), aiger.atom(right)
     active = aiger.atom(tmp)
     update = active.implies(left | right) & (~active).implies(right)
 
     circ = update.aig['o', {update.output: tmp}]
-    return circ.feedback(
-        inputs=[tmp],
-        outputs=[tmp],
-        latches=[aiger.common._fresh()],
-        initials=[False],
-        keep_outputs=True,
+    return circ.loopback(
+        {'input': tmp, 'output': tmp, 'latch': latch, 'init': False}
+
     )
 
 
