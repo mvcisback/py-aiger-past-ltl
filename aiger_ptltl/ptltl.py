@@ -23,6 +23,11 @@ EOL = "\\n"
 
 
 class PTLTLExpr(aiger.BoolExpr):
+    @property
+    def aigbv(self):
+        import aiger_bv as BV
+        return BV.aig2aigbv(self.aig)
+
     def __call__(self, trc):
         if isinstance(trc, list):
             val, _ = self.aig.simulate(trc)[-1]

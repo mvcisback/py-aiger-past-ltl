@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "py-aiger-ptltl"
 readme="README.md"
-version = "3.0.1"
+version = "3.1.0"
 description = "Library for generating (p)ast (t)ense (l)inear (t)emporal (l)ogic monitors as aiger circuits."
 authors = ["Marcell Vazquez-Chanlatte <mvc@linux.com>"]
 repository = "https://github.com/mvcisback/py-aiger-past-ltl"
@@ -13,6 +13,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7"
 py-aiger = "^6.0.0"
+py-aiger-bv = {version = "^4.5.2", optional = true}
 
 [tool.poetry.dev-dependencies]
 hypothesis_cfg = {git = "git://github.com/mvcisback/hypothesis-cfg.git"}
@@ -22,6 +23,9 @@ pytest-cov = "^2.7"
 pytest-flake8 = "^1.0"
 pytest-xdist = "^2.0.0"
 codecov = "^2.0"
+
+[tool.poetry.extras]
+with_bv = ["py-aiger-bv"]
 
 [build-system]
 requires = ["poetry>=0.12"]
