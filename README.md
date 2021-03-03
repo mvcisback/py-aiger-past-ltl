@@ -55,8 +55,9 @@ expr4 = ~(x & y & z)
 expr5 = x.historically()  #  (H x) ≡ x has held for all previous cycles (inclusive).
 expr6 = x.once()  #  (P x) ≡ x once held in a past cycle (inclusive).
 expr7 = x.vyest()  #  (Z x) ≡ x held in the previous cycle (true at time = 0).
-expr8 = x.since(y)  #  [x S y] ≡ x has held since the cycle after y last held.
+expr8 = x.yest()  #  (Y x) ≡ x held in the previous cycle (false at time = 0).
+expr9 = x.since(y)  #  [x S y] ≡ x has held since the cycle after y last held.
 
 # Composition
-expr9 = expr7.since(expr8.vyest().vyest())
+expr9 = expr7.since(expr9.vyest().vyest())
 ```

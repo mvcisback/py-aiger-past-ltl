@@ -3,7 +3,7 @@ from parsimonious import Grammar, NodeVisitor
 
 
 PLTL_GRAMMAR = Grammar(u'''
-phi =  since / or / and / implies / hist / past / vyest / neg
+phi =  since / or / and / implies / hist / past / vyest / yest / neg
      / true / false / AP
 or = "(" _ phi _ "|" _ phi _ ")"
 implies = "(" _ phi _ "->" _ phi _ ")"
@@ -11,6 +11,7 @@ and = "(" _ phi _ "&" _ phi _ ")"
 hist = "H" _ phi
 past = "P" _ phi
 vyest = "Z" _ phi
+yest = "Y" _ phi
 since = "[" _ phi _ "S" _ phi _ "]"
 neg = "~" _ phi
 true = "TRUE"
@@ -43,6 +44,9 @@ class PTLTLExpr(aiger.BoolExpr):
 
     def vyest(self):
         return PTLTLExpr(self.aig >> vyest_monitor(self.output))
+
+    def yest(self):
+        return PTLTLExpr(self.aig >> yest_monitor(self.output))
 
     def since(self, other):
         monitor = since_monitor(self.output, other.output)
@@ -81,6 +85,9 @@ class PLTLVisitor(NodeVisitor):
     def visit_vyest(self, _, children):
         return children[2].vyest()
 
+    def visit_yest(self, _, children):
+        return children[2].yest()
+
     def visit_hist(self, _, children):
         return children[2].historically()
 
@@ -101,6 +108,15 @@ def vyest_monitor(name):
     return aiger.delay(
         inputs=[name],
         initials=[True],
+        latches=[aiger.common._fresh()],
+        outputs=[aiger.common._fresh()]
+    )
+
+
+def yest_monitor(name):
+    return aiger.delay(
+        inputs=[name],
+        initials=[False],
         latches=[aiger.common._fresh()],
         outputs=[aiger.common._fresh()]
     )
