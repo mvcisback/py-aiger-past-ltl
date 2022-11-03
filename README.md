@@ -4,7 +4,6 @@ Library for generating (p)ast (t)ense (l)inear (t)emporal (l)ogic
 monitors as aiger circuits. Builds on the [py-aiger](https://github.com/mvcisback/py-aiger) project.
 
 [![Build Status](https://cloud.drone.io/api/badges/mvcisback/py-aiger-past-ltl/status.svg)](https://cloud.drone.io/mvcisback/py-aiger-past-ltl)
-[![codecov](https://codecov.io/gh/mvcisback/py-aiger-past-ltl/branch/master/graph/badge.svg)](https://codecov.io/gh/mvcisback/py-aiger-past-ltl)
 [![PyPI version](https://badge.fury.io/py/py-aiger-ptltl.svg)](https://badge.fury.io/py/py-aiger-ptltl)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
