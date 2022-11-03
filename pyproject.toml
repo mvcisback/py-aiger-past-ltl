@@ -18,7 +18,7 @@ py-aiger-bv = {version = "^4.5.2", optional = true}
 [tool.poetry.dev-dependencies]
 hypothesis_cfg = {git = "https://github.com/mvcisback/hypothesis-cfg.git"}
 hypothesis = "^6.0.0"
-parsimonious = "^0.9"
+parsimonious = "^0.10"
 pytest-xdist = "^3.0.0"
 
 [tool.poetry.extras]

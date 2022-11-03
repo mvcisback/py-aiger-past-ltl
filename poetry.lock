@@ -144,7 +144,7 @@ pyparsing = ">=2.0.2,<3.0.5 || >3.0.5"
 
 [[package]]
 name = "parsimonious"
-version = "0.9.0"
+version = "0.10.0"
 description = "(Soon to be) the fastest pure-Python PEG parser I could muster"
 category = "dev"
 optional = false
@@ -313,7 +313,7 @@ with_bv = ["py-aiger-bv"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "e3c3109c6bd94f2fbf7f8ff2294d1381966ad338e8b28c0e6b71176b94011229"
+content-hash = "e295ba493ea6629f3b63f06d55c362bc2b0954c5f2f51bf5a64108ca84bceefb"
 
 [metadata.files]
 attrs = [
@@ -358,7 +358,8 @@ packaging = [
     {file = "packaging-21.3.tar.gz", hash = "sha256:dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"},
 ]
 parsimonious = [
-    {file = "parsimonious-0.9.0.tar.gz", hash = "sha256:b2ad1ae63a2f65bd78f5e0a8ac510a98f3607a43f1db2a8d46636a5d9e4a30c1"},
+    {file = "parsimonious-0.10.0-py3-none-any.whl", hash = "sha256:982ab435fabe86519b57f6b35610aa4e4e977e9f02a14353edf4bbc75369fc0f"},
+    {file = "parsimonious-0.10.0.tar.gz", hash = "sha256:8281600da180ec8ae35427a4ab4f7b82bfec1e3d1e52f80cb60ea82b9512501c"},
 ]
 pluggy = [
     {file = "pluggy-1.0.0-py2.py3-none-any.whl", hash = "sha256:74134bbf457f031a36d68416e1509f34bd5ccc019f0bcc952c7b909d06b37bd3"},
